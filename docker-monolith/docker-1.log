@@ -1,3 +1,11 @@
 REPOSITORY    TAG       IMAGE ID       CREATED         SIZE
 ubuntu        18.04     ad080923604a   8 weeks ago     63.1MB
 hello-world   latest    feb5d9fea6a5   10 months ago   13.3kB
+
+
+
+### Ответ на задание со *
+
+Обоаз независим от контейнера.
+
+Контейнер же использует образ для создания среды работы приложения.
