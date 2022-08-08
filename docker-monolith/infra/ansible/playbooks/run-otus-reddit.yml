@@ -1,0 +1,7 @@
+- name: Run otus-reddit from dockerhub
+  hosts: all
+  become: true
+
+  tasks:
+    - name: Run reddit Docker image
+      command: docker run --name reddit -d -p 9292:9292 hatterfix/otus-reddit:1.0
