@@ -15,7 +15,7 @@ provider "yandex" {
   zone                     = var.zone
 }
 #instance-1 resource description section:
-resource "yandex_compute_instance" "docker" {
+resource "yandex_compute_instance" "docker-host" {
   count = var.counts
   name  = "docker-host${count.index}"
   #add pubkey to user from local file:
@@ -33,8 +33,8 @@ resource "yandex_compute_instance" "docker" {
 
   boot_disk {
     initialize_params {
-      #my packer-base image ID
-      image_id = var.image_id
+      #packer builded image with docker:
+      image_id = var.docker_image_id
     }
   }
 
@@ -51,3 +51,4 @@ resource "yandex_compute_instance" "docker" {
     agent       = false
     private_key = file(var.private_key_path)
   }
+}

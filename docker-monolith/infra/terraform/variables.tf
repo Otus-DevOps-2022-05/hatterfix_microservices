@@ -15,22 +15,16 @@ variable public_key_path {
 variable private_key_path {
   description = "Path to private key for provisioner access"
 }
-
-variable image_id {
-  description = "Disk image"
-}
 variable subnet_id {
   description = "Subnet"
 }
 variable service_account_key_file {
   description = "key.json"
 }
-
 variable counts {
   description = "instance count"
 }
-
-variable docker_disk_image {
+variable docker_image_id {
   description = "docker installed image:"
 }
 
