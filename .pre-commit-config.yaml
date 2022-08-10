@@ -10,3 +10,8 @@ repos:
     hooks:
      - id: ansible-lint
        files: \.(yaml|yml)$
+
+-   repo: https://github.com/hadolint/hadolint
+    rev: master
+    hooks:
+      - id: hadolint
