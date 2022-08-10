@@ -26,7 +26,7 @@ resource "yandex_compute_instance" "docker-host" {
   resources {
     core_fraction = 5
     cores         = 2
-    memory        = 2
+    memory        = 1
   }
 
   platform_id = "standard-v2"
