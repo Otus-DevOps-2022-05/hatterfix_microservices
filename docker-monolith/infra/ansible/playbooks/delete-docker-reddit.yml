@@ -1,10 +1,9 @@
-- name: delete reddit image & container 
+- name: delete reddit image & container
   hosts: all
   become: true
 
   tasks:
-    - name: check current status  
-      command: docker images
+    - name: check current status
       command: docker ps -a
 
     - name: stop reddit container
@@ -13,6 +12,5 @@
     - name: remove reddit container
       command: docker rm reddit
 
-    - name: remove docker image reddit       
+    - name: remove docker image reddit
       command: docker rmi hatterfix/otus-reddit:1.0
-
