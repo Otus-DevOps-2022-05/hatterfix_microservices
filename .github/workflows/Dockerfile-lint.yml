@@ -12,4 +12,4 @@ jobs:
       - name: Lint Dockerfile
         uses: hadolint/hadolint-action@master
         with:
-          dockerfile: "./docker-monolith/Dockerfile"
+          dockerfile: "./docker-monolith/tmpDockerfile"
