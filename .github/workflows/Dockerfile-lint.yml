@@ -9,15 +9,22 @@ jobs:
 
       - uses: actions/checkout@v2
 
-      - name: Lint Dockerfile
+      - name: Lint tmpDockerfile
         uses: hadolint/hadolint-action@master
         with:
           dockerfile: "./docker-monolith/tmpDockerfile"
-#          dockerfile: "./src/post-py/Dockerfile"
-#          dockerfile: "./src/comment/Dockerfile"
-#          dockerfile: "./src/ui/Dockerfile"
 
-      - name: Lint post py
+      - name: Lint /post-py/Dockerfile
         uses: hadolint/hadolint-action@master
         with:
           dockerfile: "./src/post-py/Dockerfile"
+
+      - name: Lint /comment/Dockerfile
+        uses: hadolint/hadolint-action@master
+        with:
+          dockerfile: "./src/comment/Dockerfile"
+
+      - name: Lint /ui/Dockerfile
+        uses: hadolint/hadolint-action@master
+        with:
+          dockerfile: "./src/ui/Dockerfile"
