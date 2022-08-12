@@ -1,0 +1,30 @@
+name: Lint Dockerfile
+
+on: push
+
+jobs:
+  linter:
+    runs-on: ubuntu-latest
+    steps:
+
+      - uses: actions/checkout@v2
+
+      - name: Lint tmpDockerfile
+        uses: hadolint/hadolint-action@master
+        with:
+          dockerfile: "./docker-monolith/tmpDockerfile"
+
+      - name: Lint /post-py/Dockerfile
+        uses: hadolint/hadolint-action@master
+        with:
+          dockerfile: "./src/post-py/Dockerfile"
+
+      - name: Lint /comment/Dockerfile
+        uses: hadolint/hadolint-action@master
+        with:
+          dockerfile: "./src/comment/Dockerfile"
+
+      - name: Lint /ui/Dockerfile
+        uses: hadolint/hadolint-action@master
+        with:
+          dockerfile: "./src/ui/Dockerfile"
