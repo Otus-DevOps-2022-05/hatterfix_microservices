@@ -11,20 +11,20 @@ services:
       - back_net
   ui:
     build: ./ui
-    image: ${USERNAME}/ui:1.5
+    image: ${USERNAME}/ui:${UI_VER}
     ports:
-      - 9292:9292/tcp
+      -  ${UI_PORT}:9292/tcp
     networks:
       - front_net
   post:
     build: ./post-py
-    image: ${USERNAME}/post:1.2
+    image: ${USERNAME}/post:${POST_VER}
     networks:
       - front_net
       - back_net
   comment:
     build: ./comment
-    image: ${USERNAME}/comment:1.2
+    image: ${USERNAME}/comment:${COMMENT_VER}
     networks:
        - front_net
        - back_net
