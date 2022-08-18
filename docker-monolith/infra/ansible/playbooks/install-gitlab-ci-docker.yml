@@ -9,7 +9,13 @@
         dest: /srv/gitlab/docker-compose.yml
         remote_src: yes
 
-    - name: run gitlab-ci in container
-      command: docker-compose up -d
-      args:
-        chdir: /srv/gitlab/
+    - name: Install community.docker dependencies for docker_compose.py
+      ansible.builtin.pip:
+        name:
+          - docker
+          - docker-compose
+
+    - name: Run gitlab via community docker-compose
+      community.docker.docker_compose:
+        project_src: /srv/gitlab/
+        state: present
