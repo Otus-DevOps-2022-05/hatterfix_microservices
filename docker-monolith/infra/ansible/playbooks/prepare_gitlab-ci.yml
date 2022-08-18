@@ -1,0 +1,69 @@
+- name: Prepare Gitlab CI
+  hosts: all
+  become: true
+
+  tasks:
+    - name: Install required system packages
+      apt:
+        pkg:
+          - ca-certificates
+          - curl
+          - gnupg
+          - lsb-release
+        state: present
+        update_cache: true
+
+    - name: Create a keyrings directory if it does not exist
+      ansible.builtin.file:
+        path: /etc/apt/keyrings
+        state: directory
+        mode: '0755'
+
+    - name: Create gitlab/config directory if it does not exist
+      ansible.builtin.file:
+        path: /srv/gitlab/config
+        state: directory
+        mode: '0755'
+
+    - name: Create gitlab/data directory if it does not exist
+      ansible.builtin.file:
+        path: /srv/gitlab/data
+        state: directory
+        mode: '0755'
+
+    - name: Create gitlab/logs directory if it does not exist
+      ansible.builtin.file:
+        path: /srv/gitlab/logs
+        state: directory
+        mode: '0755'
+
+    - name: Add Docker GPG apt Key
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+
+    - name: Add Docker Repository
+      apt_repository:
+        repo: deb https://download.docker.com/linux/ubuntu bionic stable
+        state: present
+
+    - name: Update apt and install docker components
+      apt:
+        pkg:
+          - docker-ce
+          - docker-ce-cli
+          - containerd.io
+          - docker-compose
+          - docker-compose-plugin
+        state: present
+        update_cache: true
+      notify: start docker
+
+    - name: enable docker
+      become: true
+      systemd: name=docker enabled=yes
+
+  handlers:
+      - name: start docker
+        become: true
+        service: name=docker state=started

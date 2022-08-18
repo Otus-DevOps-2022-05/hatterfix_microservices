@@ -51,4 +51,9 @@ resource "yandex_compute_instance" "gitlab-ci" {
     agent       = false
     private_key = file(var.private_key_path)
   }
+
+  provisioner "file" {
+    content     = templatefile("./files/docker-compose.yml.tmpl", { ext_ip = self.network_interface.0.nat_ip_address})
+    destination = "/tmp/docker-compose.yml"
+  }
 }

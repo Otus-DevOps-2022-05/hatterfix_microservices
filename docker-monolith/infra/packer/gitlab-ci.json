@@ -21,7 +21,7 @@
     "provisioners": [
       {
       "type": "ansible",
-      "playbook_file": "ansible/playbooks/install-docker.yml"
+      "playbook_file": "ansible/playbooks/prepare_gitlab-ci.yml"
       }
      ]
 }
