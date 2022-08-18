@@ -56,4 +56,7 @@ resource "yandex_compute_instance" "gitlab-ci" {
     content     = templatefile("./files/docker-compose.yml.tmpl", { ext_ip = self.network_interface.0.nat_ip_address})
     destination = "/tmp/docker-compose.yml"
   }
+    provisioner "local-exec" {
+    command = "ansible-playbook -u ubuntu -i '${self.network_interface.0.nat_ip_address},' ../../ansible/playbooks/install-gitlab-ci-docker.yml"
+}
 }
