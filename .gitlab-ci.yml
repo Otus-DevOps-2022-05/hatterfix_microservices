@@ -10,9 +10,9 @@ stages:
 variables:
   DATABASE_URL: 'mongodb://mongo/user_posts'
 
-before_script:
-  - cd reddit
-  - bundle install
+#before_script:
+#  - cd reddit
+#  - bundle install
 
 build_job:
   stage: build
@@ -21,12 +21,12 @@ build_job:
     - echo 'Building'
     - docker run --name reddit -d -p 9292:9292 hatterfix/otus-reddit:1.0
 
-test_unit_job:
-  stage: test
-  services:
-    - mongo:latest
-  script:
-    - ruby simpletest.rb
+#test_unit_job:
+#  stage: test
+#  services:
+#    - mongo:latest
+#  script:
+#    - ruby simpletest.rb
 
 test_integration_job:
   stage: test
