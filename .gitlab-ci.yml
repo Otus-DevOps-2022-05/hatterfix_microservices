@@ -19,11 +19,14 @@ build_job:
   image: hatterfix/otus-reddit:1.0
   services:
     - docker:dind
+  variables:
+    DOCKER_HOST: tcp://docker:2375/
+    DOCKER_DRIVER: overlay2
   before_script:
     - docker info
   script:
     - echo 'Building'
-    - docker run --name reddit -d -p 9292:9292 hatterfix/otus-reddit:1.0
+    - sudo docker run --name reddit -d -p 9292:9292 hatterfix/otus-reddit:1.0
 
 test_unit_job:
   stage: test
