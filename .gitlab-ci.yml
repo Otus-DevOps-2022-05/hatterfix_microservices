@@ -20,7 +20,7 @@ build_job:
    - docker:19.03
    - hatterfix/otus-reddit:1.0
   services:
-    - name: docker:19.03-dind
+    - docker:19.03-dind
   script:
     - echo 'Building'
 
