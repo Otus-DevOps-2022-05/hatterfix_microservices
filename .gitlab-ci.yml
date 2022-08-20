@@ -22,8 +22,6 @@ build_job:
   variables:
     DOCKER_HOST: tcp://docker:2375/
     DOCKER_DRIVER: overlay2
-  before_script:
-    - docker info
   script:
     - echo 'Building'
     - sudo docker run --name reddit -d -p 9292:9292 hatterfix/otus-reddit:1.0
