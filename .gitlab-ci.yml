@@ -16,8 +16,10 @@ before_script:
 
 build_job:
   stage: build
+  image: hatterfix/otus-reddit:1.0
   script:
     - echo 'Building'
+    - docker run --name reddit -d -p 9292:9292 hatterfix/otus-reddit:1.0
 
 test_unit_job:
   stage: test
