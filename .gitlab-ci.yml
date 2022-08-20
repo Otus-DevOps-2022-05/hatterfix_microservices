@@ -16,15 +16,13 @@ variables:
 
 build_job:
   stage: build
-  image: hatterfix/otus-reddit:1.0
+  image:
+   - docker:19.03
+   - hatterfix/otus-reddit:1.0
   services:
-    - docker:dind
-  variables:
-    DOCKER_HOST: tcp://docker:2375/
-    DOCKER_DRIVER: overlay2
+    - name: docker:19.03-dind
   script:
     - echo 'Building'
-    - sudo docker run --name reddit -d -p 9292:9292 hatterfix/otus-reddit:1.0
 
 test_unit_job:
   stage: test
@@ -50,6 +48,7 @@ branch review:
   stage: review
   script:
     - echo "Deploy to $CI_ENVIRONMENT_SLUG"
+    - docker run --name reddit -d -p 9292:9292 hatterfix/otus-reddit:1.0
   environment:
     name: branch/$CI_COMMIT_REF_NAME
     url: http://$CI_ENVIRONMENT_SLUG.example.com
