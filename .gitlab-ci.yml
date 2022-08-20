@@ -17,16 +17,20 @@ variables:
 build_job:
   stage: build
   image: hatterfix/otus-reddit:1.0
+  services:
+    - docker:dind
+  before_script:
+    - docker info
   script:
     - echo 'Building'
     - docker run --name reddit -d -p 9292:9292 hatterfix/otus-reddit:1.0
 
-#test_unit_job:
-#  stage: test
-#  services:
-#    - mongo:latest
-#  script:
-#    - ruby simpletest.rb
+test_unit_job:
+  stage: test
+  services:
+    - mongo:latest
+  script:
+    - ruby simpletest.rb
 
 test_integration_job:
   stage: test
