@@ -18,7 +18,6 @@ build_job:
   stage: build
   image:
    - docker:19.03
-   - hatterfix/otus-reddit:1.0
   services:
     - docker:19.03-dind
   script:
