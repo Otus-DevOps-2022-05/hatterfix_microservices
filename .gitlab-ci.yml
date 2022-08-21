@@ -28,7 +28,7 @@ build_job:
 
   services:
     - name: docker:19.03.12-dind
-    - alias: docker
+      alias: docker
 
   before_script:
     - docker info
