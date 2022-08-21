@@ -3,8 +3,6 @@ default:
   before_script:
     - cd reddit
     - bundle install
-  services:
-    - name: docker:18.09.7-dind
 
 stages:
   - build
@@ -19,10 +17,13 @@ variables:
   DOCKER_TLS_CERTDIR: ""
 
 build_job:
-  image: docker:latest
+  image: docker:19.03.12
   stage: build
   tags:
     - dind
+  services:
+    - docker:19.03.12-dind
+
   before_script:
     - docker info
     - echo $CI_SERVER_HOST
@@ -56,9 +57,11 @@ test_unit_job:
     url: http://dev.example.com
 
 branch review:
-  image: docker:19.03
+  image: docker:19.03.12
   variables:
     DOCKER_HOST: tcp://docker:2375
+    services:
+     - name: docker:18.09.7-dind
   stage: review
   tags:
     - docker
