@@ -14,9 +14,9 @@ stages:
 variables:
   DATABASE_URL: 'mongodb://mongo/user_posts'
 
-  services:
-    - name: docker:19.03.12-dind
-      alias: docker
+services:
+  - name: docker:19.03.12-dind
+    alias: docker
 
 build_job:
 
