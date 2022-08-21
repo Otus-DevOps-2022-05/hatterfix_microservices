@@ -14,6 +14,10 @@ stages:
 variables:
   DATABASE_URL: 'mongodb://mongo/user_posts'
 
+  services:
+    - name: docker:19.03.12-dind
+      alias: docker
+
 build_job:
 
   image: docker:19.03.12
@@ -26,9 +30,9 @@ build_job:
     DOCKER_HOST: tcp://docker:2375
     DOCKER_TLS_CERTDIR: ""
 
-  services:
-    - name: docker:19.03.12-dind
-      alias: docker
+  # services:
+  #   - name: docker:19.03.12-dind
+  #     alias: docker
 
   before_script:
     - docker info
