@@ -16,7 +16,7 @@ variables:
 
 build_job:
 
-  image: docker:19.03.12
+  image: docker:latest
 
   stage: build
   tags:
@@ -26,9 +26,9 @@ build_job:
     DOCKER_HOST: tcp://docker:2375
     DOCKER_TLS_CERTDIR: ""
 
-  services:
-    - name: docker:19.03.12-dind
-      alias: docker
+  # services:
+  #   - name: docker-dind
+  #     alias: docker
 
   before_script:
     - docker info
