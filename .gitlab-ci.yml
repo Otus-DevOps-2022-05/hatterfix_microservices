@@ -27,7 +27,8 @@ build_job:
     DOCKER_TLS_CERTDIR: ""
 
   services:
-    - docker:19.03.12-dind
+    - name: docker:19.03.12-dind
+    - alias: docker
 
   before_script:
     - docker info
