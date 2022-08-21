@@ -25,9 +25,9 @@ build_job:
   image: docker:19.03.12
   before_script:
     - docker info
-  #  - echo $CI_SERVER_HOST
   script:
     - echo 'Building'
+    - docker build -t my-docker-image
 
 test_unit_job:
   stage: test
