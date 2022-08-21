@@ -26,9 +26,9 @@ build_job:
     DOCKER_HOST: tcp://docker:2375
     DOCKER_TLS_CERTDIR: ""
 
-  # services:
-  #   - name: docker-dind
-  #     alias: docker
+  services:
+    - name: docker-dind
+      alias: docker
 
   before_script:
     - docker info
