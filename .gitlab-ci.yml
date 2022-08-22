@@ -13,16 +13,15 @@ stages:
 
 variables:
   DATABASE_URL: 'mongodb://mongo/user_posts'
-  DOCKER_HOST: tcp://docker:2375
-  DOCKER_TLS_CERTDIR: ""
-  SERVICE_PORT_2376_TCP_PORT: 2375
+  #DOCKER_HOST: tcp://docker:2375
+  DOCKER_TLS_CERTDIR: "/certs"
+  #SERVICE_PORT_2376_TCP_PORT: 2375
 
 services:
   - name: docker:19.03.12-dind
     alias: docker
     entrypoint: ["env", "-u", "DOCKER_HOST"]
     command: ["dockerd-entrypoint.sh"]
-
 build_job:
 
   image: docker:19.03.12
