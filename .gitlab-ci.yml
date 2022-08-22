@@ -45,8 +45,8 @@ build_job:
 
 
 test_unit_job:
-   stage: test
    image: docker:19.03.12
+   stage: test
    tags:
      - dind
    script:
