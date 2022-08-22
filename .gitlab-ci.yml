@@ -1,8 +1,8 @@
-default:
-  image: ruby:2.4.2
-  before_script:
-    - cd reddit
-    - bundle install
+# default:
+#   image: ruby:2.4.2
+#   before_script:
+#     - cd reddit
+#     - bundle install
 
 stages:
   - build
