@@ -1,0 +1,23 @@
+- name: Add gitlab runner
+  hosts: all
+  become: true
+
+  tasks:
+
+    - name: Install community.general dependencies for gitlab_runner
+      ansible.builtin.pip:
+        name:
+          - python-gitlab
+
+    - name: Register new runner in Gitlab
+      community.general.gitlab_runner:
+        api_url: http://62.84.113.93/
+        api_token: "-_Eqh4LKox_BKuTnrmHM"
+        registration_token: GR1348941-fPHN-bAny5Brn2f4SQb
+        description: Test1 runner
+        state: present
+        active: True
+        run_untagged: True
+        tag_list: ['test']
+        validate_certs: no
+        project: homework/example

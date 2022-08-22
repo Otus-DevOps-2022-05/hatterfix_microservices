@@ -1,4 +1,4 @@
-- name: Install docker
+- name: Prepare Gitlab CI
   hosts: all
   become: true
 
@@ -10,12 +10,31 @@
           - curl
           - gnupg
           - lsb-release
+          - python3-pip
         state: present
         update_cache: true
 
     - name: Create a keyrings directory if it does not exist
       ansible.builtin.file:
         path: /etc/apt/keyrings
+        state: directory
+        mode: '0755'
+
+    - name: Create gitlab/config directory if it does not exist
+      ansible.builtin.file:
+        path: /srv/gitlab/config
+        state: directory
+        mode: '0755'
+
+    - name: Create gitlab/data directory if it does not exist
+      ansible.builtin.file:
+        path: /srv/gitlab/data
+        state: directory
+        mode: '0755'
+
+    - name: Create gitlab/logs directory if it does not exist
+      ansible.builtin.file:
+        path: /srv/gitlab/logs
         state: directory
         mode: '0755'
 

@@ -1,0 +1,21 @@
+- name: Run Gitlab CI into container
+  hosts: all
+  become: true
+
+  tasks:
+    - name: Copy docker-compose.yml to /srv/gitlab
+      ansible.builtin.copy:
+        src: /tmp/docker-compose.yml
+        dest: /srv/gitlab/docker-compose.yml
+        remote_src: yes
+
+    - name: Install community.docker dependencies for docker_compose.py
+      ansible.builtin.pip:
+        name:
+          - docker
+          - docker-compose
+
+    - name: Run gitlab via community docker-compose
+      community.docker.docker_compose:
+        project_src: /srv/gitlab/
+        state: present

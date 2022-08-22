@@ -1,0 +1,27 @@
+{
+    "builders": [
+        {
+            "type": "yandex",
+            "service_account_key_file": "{{user `service_account_key_file`}}",
+            "ssh_username" : "ubuntu",
+            "folder_id": "{{user `folder_id`}}",
+            "source_image_family": "{{user `source_image_family`}}",
+            "image_name": "gitlab-ci-base-{{timestamp}}",
+            "image_family": "gitlab-ci",
+            "platform_id" : "standard-v2",
+            "subnet_id" : "{{user `subnet_id`}}",
+            "zone": "ru-central1-a",
+            "use_ipv4_nat" : "true",
+            "instance_cores": 2,
+            "instance_mem_gb": 4,
+            "disk_size_gb": 50
+        }
+    ],
+
+    "provisioners": [
+      {
+      "type": "ansible",
+      "playbook_file": "ansible/playbooks/prepare_gitlab-ci.yml"
+      }
+     ]
+}
