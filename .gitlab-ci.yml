@@ -22,6 +22,7 @@ services:
     alias: docker
     entrypoint: ["env", "-u", "DOCKER_HOST"]
     command: ["dockerd-entrypoint.sh"]
+
 build_job:
 
   image: docker:19.03.12
@@ -45,6 +46,7 @@ build_job:
 
 test_unit_job:
    stage: test
+   image: docker:19.03.12
    tags:
      - dind
    script:
