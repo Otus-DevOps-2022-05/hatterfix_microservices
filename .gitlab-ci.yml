@@ -44,13 +44,24 @@ build_job:
 
 
 test_unit_job:
-  stage: test
-  tags:
-    - docker
-  services:
-    - mongo:latest
-  script:
-    - ruby simpletest.rb
+   stage: test
+   tags:
+     - dind
+   script:
+     - echo "test image pulling"
+     - docker pull hatterfix/otus-reddit:1.0
+
+# test_unit_job:
+#   stage: test
+#   tags:
+#     - docker
+#   services:
+#     - mongo:latest
+#   before_script:
+#     - cd reddit
+#     - bundle install
+#   script:
+#     - ruby simpletest.rb
 
 .test_integration_job:
   stage: test
