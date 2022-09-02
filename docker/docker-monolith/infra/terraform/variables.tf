@@ -27,4 +27,3 @@ variable counts {
 variable docker_image_id {
   description = "docker installed image:"
 }
-
