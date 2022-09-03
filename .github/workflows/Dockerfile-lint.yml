@@ -12,7 +12,7 @@ jobs:
       - name: Lint tmpDockerfile
         uses: hadolint/hadolint-action@master
         with:
-          dockerfile: "./docker-monolith/tmpDockerfile"
+          dockerfile: "./docker/docker-monolith/tmpDockerfile"
 
       - name: Lint /post-py/Dockerfile
         uses: hadolint/hadolint-action@master
@@ -28,3 +28,8 @@ jobs:
         uses: hadolint/hadolint-action@master
         with:
           dockerfile: "./src/ui/Dockerfile"
+
+      - name: Lint /prometheus/Dockerfile
+        uses: hadolint/hadolint-action@master
+        with:
+          dockerfile: "./monitoring/prometheus/Dockerfile"
