@@ -30,7 +30,7 @@ services:
       - front_net
       - back_net
   prometheus:
-    image: ${USERNAME}/prometheus_mongo
+    image: ${USERNAME}/prometheus_blackbox
     ports:
       - '9090:9090'
     volumes:
@@ -62,6 +62,13 @@ services:
       - MONGODB_URI=mongodb://post_db:27017
     networks:
       - back_net
+
+  blackbox-exporter:
+    image: prom/blackbox-exporter:v0.22.0
+    networks:
+      - front_net
+      - back_net
+
 volumes:
     post_db:
     prometheus_data:
