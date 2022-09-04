@@ -30,7 +30,7 @@ services:
       - front_net
       - back_net
   prometheus:
-    image: ${USERNAME}/prometheus_nodeexp
+    image: ${USERNAME}/prometheus_mongo
     ports:
       - '9090:9090'
     volumes:
@@ -53,6 +53,13 @@ services:
       - '--path.procfs=/host/proc'
       - '--path.sysfs=/host/sys'
       - '--collector.filesystem.ignored-mount-points="^/(sys|proc|dev|host|etc)($$|/)"'
+    networks:
+      - back_net
+  mongodb-exporter:
+    image: bitnami/mongodb-exporter
+    user: root
+    environment:
+      - MONGODB_URI=mongodb://post_db:27017
     networks:
       - back_net
 volumes:
