@@ -24,6 +24,8 @@ Starting redditdocker_post_db_1 ... done
 Starting redditdocker_post_1    ... done
 Starting redditdocker_ui_1      ... done
 
+```
+
 ##Ссылки на образы Dockerhub:
 
 [prometheus](https://hub.docker.com/repository/docker/hatterfix/otus-prometheus)
