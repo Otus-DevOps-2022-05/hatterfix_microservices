@@ -9,3 +9,4 @@
 .cache
 .pytest_cache
 .env
+bugged-code
