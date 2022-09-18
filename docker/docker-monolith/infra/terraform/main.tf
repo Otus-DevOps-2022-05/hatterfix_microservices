@@ -25,7 +25,7 @@ resource "yandex_compute_instance" "docker-host" {
 
   resources {
     core_fraction = 5
-    cores         = 2
+    cores         = 4
     memory        = 4
   }
 
