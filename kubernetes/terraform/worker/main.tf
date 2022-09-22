@@ -15,16 +15,16 @@ provider "yandex" {
   zone                     = var.zone
 }
 #instance-1 resource description section:
-resource "yandex_compute_instance" "k8s-master" {
+resource "yandex_compute_instance" "k8s-worker" {
   count = var.counts
-  name  = "k8s-master${count.index}"
+  name  = "k8s-worker${count.index}"
   #add pubkey to user from local file:
   metadata = {
     ssh-keys = "ubuntu:${file(var.public_key_path)}"
   }
 
   labels = {
-    tags = "master-node"
+    tags = "worker-node"
   }
 
   resources {
@@ -71,13 +71,7 @@ resource "yandex_compute_instance" "k8s-master" {
       "sudo /tmp/copy-daemon.sh",
     ]
   }
-    provisioner "file" {
-    source     = "../files/calico.yaml"
-    destination = "/tmp/calico.yaml"
-  }
     provisioner "local-exec" {
-    #command = "ansible-playbook -u ubuntu -i '${self.network_interface.0.nat_ip_address},' ../../ansible/playbooks/k8s-install.yml"
-     command = "ansible-playbook -u ubuntu  ./playbooks/k8s-install.yml"
-     working_dir = "../../ansible"
+    command = "ansible-playbook -u ubuntu -i '${self.network_interface.0.nat_ip_address},' ../../ansible/playbooks/k8s-worker-install.yml"
 }
 }

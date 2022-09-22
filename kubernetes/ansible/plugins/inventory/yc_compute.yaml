@@ -8,4 +8,10 @@ service_account_file: /home/hatter/otus-DevOPS/ansible/keys/key.json
 strict: False
 compose:
   ansible_host: network_interfaces[*].primary_v4_address.one_to_one_nat.address'
+#keyed_groups:
+#  - key: labels['tags']
+#    tag: master
+groups:
+  master: labels['tags'] == 'master-node'
+  workers: labels['tags'] == 'worker-node'
 ...
