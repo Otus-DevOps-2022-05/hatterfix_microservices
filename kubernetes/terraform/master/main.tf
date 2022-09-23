@@ -77,7 +77,12 @@ resource "yandex_compute_instance" "k8s-master" {
   }
     provisioner "local-exec" {
     #command = "ansible-playbook -u ubuntu -i '${self.network_interface.0.nat_ip_address},' ../../ansible/playbooks/k8s-install.yml"
-     command = "ansible-playbook -u ubuntu  ./playbooks/k8s-install.yml"
+     command = "ansible-playbook -v -u ubuntu  ./playbooks/k8s-install.yml"
+     working_dir = "../../ansible"
+}
+    provisioner "local-exec" {
+    #command = "ansible-playbook -u ubuntu -i '${self.network_interface.0.nat_ip_address},' ../../ansible/playbooks/k8s-install.yml"
+     command = "ansible-playbook -v -u ubuntu  ./playbooks/k8s-connect-workers.yml"
      working_dir = "../../ansible"
 }
 }
