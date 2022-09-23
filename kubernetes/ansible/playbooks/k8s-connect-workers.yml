@@ -7,14 +7,16 @@
     - name: Get the token for joining the worker nodes
       become: yes
       become_user: ubuntu
-      shell: kubeadm token create  --print-join-command
+      command: kubeadm token create  --print-join-command
       register: kubernetes_join_command
 
-    - debug: msg="{{ kubernetes_join_command.stdout }}"
+    - name: show join-command details
+      debug: msg="{{ kubernetes_join_command.stdout }}"
 
     - name: Copy join command to local file.
       become: true
-      local_action: copy content="{{ kubernetes_join_command.stdout_lines[0] }}" dest="/tmp/kubernetes_join_command" mode=0777
+      ansible.builtin.command: copy content="{{ kubernetes_join_command.stdout_lines[0] }}" dest="/tmp/kubernetes_join_command" mode=0777
+      delegate_to: 127.0.0.1
 
 - name: Connect k8s workers
   hosts: workers
