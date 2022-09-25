@@ -5,6 +5,7 @@ repos:
      - id: end-of-file-fixer
      - id: trailing-whitespace
      - id: check-yaml
+       args: [--allow-multiple-documents]
 
 - repo: https://github.com/ansible/ansible-lint.git
   rev: v6.4.0

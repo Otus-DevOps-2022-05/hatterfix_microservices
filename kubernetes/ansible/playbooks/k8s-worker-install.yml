@@ -1,0 +1,42 @@
+- name: Prepare k8s-workers
+  hosts: all
+  become: true
+
+  tasks:
+    - name: Install required system packages
+      apt:
+        pkg:
+          - ca-certificates
+          - curl
+          - apt-transport-https
+        state: present
+        update_cache: true
+
+    - name: Add k8s GPG apt Key
+      apt_key:
+        url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+        state: present
+
+    - name: Add k8s Repository
+      apt_repository:
+        repo: deb http://apt.kubernetes.io/ kubernetes-xenial main
+        state: present
+
+    - name: Update apt and install k8s components
+      apt:
+        pkg:
+          - kubelet=1.23.0-00
+          - kubeadm=1.23.0-00
+          - kubectl=1.23.0-00
+        state: present
+        update_cache: true
+      notify: restart docker
+
+    - name: Get instance IP
+      ipify_facts:
+      register: public_ip
+
+  handlers:
+      - name: restart docker
+        become: true
+        service: name=docker state=started

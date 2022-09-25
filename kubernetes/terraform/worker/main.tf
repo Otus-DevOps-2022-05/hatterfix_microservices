@@ -15,12 +15,16 @@ provider "yandex" {
   zone                     = var.zone
 }
 #instance-1 resource description section:
-resource "yandex_compute_instance" "docker-host" {
+resource "yandex_compute_instance" "k8s-worker" {
   count = var.counts
-  name  = "docker-host${count.index}"
+  name  = "k8s-worker${count.index}"
   #add pubkey to user from local file:
   metadata = {
     ssh-keys = "ubuntu:${file(var.public_key_path)}"
+  }
+
+  labels = {
+    tags = "worker-node"
   }
 
   resources {
@@ -51,4 +55,23 @@ resource "yandex_compute_instance" "docker-host" {
     agent       = false
     private_key = file(var.private_key_path)
   }
+    provisioner "file" {
+    source     = "../files/daemon.json"
+    destination = "/tmp/daemon.json"
+  }
+
+    provisioner "file" {
+    source     = "../files/copy-daemon.sh"
+    destination = "/tmp/copy-daemon.sh"
+  }
+
+    provisioner "remote-exec" {
+      inline = [
+      "chmod +x /tmp/copy-daemon.sh",
+      "sudo /tmp/copy-daemon.sh",
+    ]
+  }
+    provisioner "local-exec" {
+    command = "ansible-playbook -u ubuntu -i '${self.network_interface.0.nat_ip_address},' ../../ansible/playbooks/k8s-worker-install.yml"
+}
 }

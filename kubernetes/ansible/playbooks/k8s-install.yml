@@ -1,0 +1,73 @@
+- name: Prepare k8s-master
+  hosts: master
+  become: true
+
+  tasks:
+    - name: Install required system packages
+      apt:
+        pkg:
+          - ca-certificates
+          - curl
+          - apt-transport-https
+        state: present
+        update_cache: true
+
+    - name: Add k8s GPG apt Key
+      apt_key:
+        url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+        state: present
+
+    - name: Add k8s Repository
+      apt_repository:
+        repo: deb http://apt.kubernetes.io/ kubernetes-xenial main
+        state: present
+
+    - name: Update apt and install k8s components
+      apt:
+        pkg:
+          - kubelet=1.23.0-00
+          - kubeadm=1.23.0-00
+          - kubectl=1.23.0-00
+        state: present
+        update_cache: true
+      notify: restart docker
+
+    - name: Get instance IP
+      ipify_facts:
+      register: public_ip
+
+    - name: Show instance IP
+      debug: msg="{{ public_ip.ansible_facts.ipify_public_ip }}"
+
+    - name: initialize the cluster
+      shell: kubeadm init --v=6 --apiserver-cert-extra-sans="{{ public_ip.ansible_facts.ipify_public_ip }}" --apiserver-advertise-address=0.0.0.0 --control-plane-endpoint="{{ public_ip.ansible_facts.ipify_public_ip }}" --pod-network-cidr=10.244.0.0/16 >> cluster_initialized.txt
+      args:
+        chdir: $HOME
+        creates: cluster_initialized.txt
+
+    - name: create .kube directory
+      become: yes
+      become_user: ubuntu
+      file:
+        path: $HOME/.kube
+        state: directory
+        mode: 0755
+
+    - name: copy admin.conf to user's kube config
+      copy:
+        src: /etc/kubernetes/admin.conf
+        dest: /home/ubuntu/.kube/config
+        remote_src: yes
+        owner: ubuntu
+
+    - name: nstall Pod network
+      become_user: ubuntu
+      shell: kubectl apply -f /tmp/calico.yaml >> pod_network_setup.txt
+      args:
+        chdir: $HOME
+        creates: pod_network_setup.txt
+
+  handlers:
+      - name: restart docker
+        become: true
+        service: name=docker state=started
