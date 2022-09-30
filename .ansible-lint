@@ -8,3 +8,4 @@ skip_list:
 - meta-no-info
 - fqcn-builtins
 - no-changed-when
+- deprecated-local-action
