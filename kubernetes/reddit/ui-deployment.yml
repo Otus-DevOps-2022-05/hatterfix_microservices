@@ -22,3 +22,8 @@ spec: # Блок спецификации деплоя
       containers:
       - image: hatterfix/ui:logging
         name: ui
+        env:
+        - name: ENV
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
