@@ -2,6 +2,7 @@
 *.tfstate.*.backup
 *.tfstate.backup
 *.tfvars
+*.tfvars.swp
 .terraform/
 *.retry
 *.log
