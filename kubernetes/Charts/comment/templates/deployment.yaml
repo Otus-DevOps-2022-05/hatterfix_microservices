@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ template "comment.ver" . }}
+  name: {{ template "comment.fullname" . }}
   labels:
     app: reddit
     component: comment
