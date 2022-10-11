@@ -25,11 +25,12 @@ spec:
         release: {{ .Release.Name }}
     spec:
       containers:
-      - image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+      - image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
         name: ui
         ports:
         - containerPort: {{ .Values.service.internalPort }}
           name: ui
+          protocol: TCP
         env:
         - name: POST_SERVICE_HOST
           value: {{  .Values.postHost | default (printf "%s-post" .Release.Name) }}
