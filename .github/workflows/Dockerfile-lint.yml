@@ -17,7 +17,7 @@ jobs:
       - name: Lint /post-py/Dockerfile
         uses: hadolint/hadolint-action@master
         with:
-          dockerfile: "./src/post-py/Dockerfile"
+          dockerfile: "./src/post/Dockerfile"
 
       - name: Lint /comment/Dockerfile
         uses: hadolint/hadolint-action@master

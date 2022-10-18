@@ -11,3 +11,5 @@
 .pytest_cache
 .env
 bugged-code
+Gitlab_ci
+Gitlab_ci/
